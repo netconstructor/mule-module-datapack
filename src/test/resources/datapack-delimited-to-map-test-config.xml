@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:flatpack="http://www.mulesoft.org/schema/mule/datapack"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+    xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd
+        http://www.mulesoft.org/schema/mule/datapack http://www.mulesoft.org/schema/mule/datapack/3.1/mule-datapack.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.1/mule-vm.xsd
+        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/3.1/mule-scripting.xsd
+        ">
+
+    <flow name="delimitedToMap">
+        <vm:inbound-endpoint path="delimitedToMap.in" exchange-pattern="request-response"/>
+
+        <flatpack:delimited-to-map-transformer delimiter="\t">
+            <flatpack:column column-name="value1"/>
+            <flatpack:column column-name="value2"/>
+        </flatpack:delimited-to-map-transformer>
+    </flow>
+
+</mule>

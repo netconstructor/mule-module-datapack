@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:flatpack="http://www.mulesoft.org/schema/mule/datapack"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+    xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd
+        http://www.mulesoft.org/schema/mule/datapack http://www.mulesoft.org/schema/mule/datapack/3.1/mule-datapack.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.1/mule-vm.xsd
+        ">
+
+    <flow name="fixedwidthoutput">
+        <vm:inbound-endpoint path="fixedwidthoutput.in"/>
+
+        <flatpack:fixed-width-output-transformer>
+            <flatpack:column column-name="column1" length="5" value="#[payload]"/>
+            <flatpack:column column-name="column2" length="6" value="#[payload]"/>
+        </flatpack:fixed-width-output-transformer>
+
+        <flatpack:delimited-output-transformer>
+            <flatpack:column column-name="column3" length="5" value="#[payload]"/>
+        </flatpack:delimited-output-transformer>
+    </flow>
+
+</mule>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/datapack"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+            xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            targetNamespace="http://www.mulesoft.org/schema/mule/datapack"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/3.1/mule-schemadoc.xsd"/>
+
+    <xsd:annotation>
+        <xsd:documentation>Provides transformation to fixed width and delimited strings.</xsd:documentation>
+        <xsd:appinfo>
+            <schemadoc:short-name>datapack</schemadoc:short-name>
+            <schemadoc:page-title>datapack Module</schemadoc:page-title>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+
+    <xsd:element name="fixed-width-output-transformer" type="FixedWidthOutputType"
+                 substitutionGroup="mule:abstract-transformer">
+        <xsd:annotation>
+            <xsd:documentation>
+                Based upon the configuration generate a fixed width output.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="FixedWidthOutputType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:sequence>
+                    <xsd:element ref="abstract-column" minOccurs="1" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>
+
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="pad-char" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The padding char to be used, by default a space is used.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="pad-format" type="padFormatType" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            This specifies which side the padding should occur on, by default it is the left.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="newline-char" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            This is the newline character to used for the row once written out.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="delimited-output-transformer" type="DelimitedOutputType"
+                 substitutionGroup="mule:abstract-transformer">
+        <xsd:annotation>
+            <xsd:documentation>
+                Based upon the configuration generate a fixed width output.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="DelimitedOutputType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:sequence>
+                    <xsd:element ref="abstract-column" minOccurs="1" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>
+
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="delimiter-char" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The delimiter to be used, by default a comma is used.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="trim-to-length" type="xsd:boolean" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Specifies if the columns should be trimed to the length specified in the column definition.
+                            By default this is false.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="newline-char" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            This is the newline character to used for the row once written out, by default this is a
+                            "\n".
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="padFormatType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="left"/>
+            <xsd:enumeration value="right"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="delimited-to-map-transformer" type="DelimitedToMapType"
+                 substitutionGroup="mule:abstract-transformer">
+        <xsd:annotation>
+            <xsd:documentation>
+
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="DelimitedToMapType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:sequence>
+                    <xsd:element ref="abstract-column" minOccurs="1" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>
+
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="delimiter" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            This is the delimiter used when breaking up the row of data into individual columns.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="abstract-column" type="abstractColumnType">
+    </xsd:element>
+    <xsd:complexType name="abstractColumnType">
+    </xsd:complexType>
+
+    <xsd:element name="column" type="columnType" substitutionGroup="abstract-column">
+
+    </xsd:element>
+    <xsd:complexType name="columnType">
+        <xsd:complexContent>
+            <xsd:extension base="abstractColumnType">
+                <xsd:attribute name="column-name" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Name of the column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="length" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            When used with fixed width output this specifies the length of the field.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="value" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The value that will be used to set the column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="default-value" type="xsd:string" use="optional">
+
+                </xsd:attribute>
+                <xsd:attribute name="pad-char" type="xsd:string" use="optional">
+
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+
+    </xsd:complexType>
+
+    <xsd:element name="date-time-column" type="dateTimeColumnType" substitutionGroup="abstract-column">
+
+    </xsd:element>
+    <xsd:complexType name="dateTimeColumnType">
+        <xsd:complexContent>
+            <xsd:extension base="columnType">
+                <xsd:attribute name="date-format-in" type="xsd:string" use="required">
+
+                </xsd:attribute>
+                <xsd:attribute name="date-format-out" type="xsd:string" use="required">
+
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="transform-column" type="transformColumnType" substitutionGroup="abstract-column">
+
+    </xsd:element>
+    <xsd:complexType name="transformColumnType">
+        <xsd:complexContent>
+            <xsd:extension base="columnType">
+                <xsd:attribute name="transformer-name" type="xsd:string" use="required">
+
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>
