@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:flatpack="http://www.mulesoft.org/schema/mule/datapack"
+      xmlns:datapack="http://www.mulesoft.org/schema/mule/datapack"
       xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
     xsi:schemaLocation="
@@ -14,10 +14,10 @@
     <flow name="delimitedOutputWithPipes">
         <vm:inbound-endpoint path="delimitedOutputWithPipes.in" exchange-pattern="request-response"/>
 
-        <flatpack:delimited-output-transformer delimiter-char="|">
-            <flatpack:column value="#[payload]"/>
-            <flatpack:column value="#[payload]"/>
-        </flatpack:delimited-output-transformer>
+        <datapack:delimited-output-transformer delimiter-char="|">
+            <datapack:column value="#[payload]"/>
+            <datapack:column value="#[payload]"/>
+        </datapack:delimited-output-transformer>
     </flow>
 
 
@@ -30,9 +30,9 @@
     <flow name="delimitedOutPutWithTransformers">
         <vm:inbound-endpoint path="delimitedOutPutWithTransformers.in" exchange-pattern="request-response"/>
 
-        <flatpack:delimited-output-transformer>
-            <flatpack:transform-column value="data" transformer-name="scriptTransformer"/>
-        </flatpack:delimited-output-transformer>
+        <datapack:delimited-output-transformer>
+            <datapack:transform-column value="data" transformer-name="scriptTransformer"/>
+        </datapack:delimited-output-transformer>
     </flow>
 
 

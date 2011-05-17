@@ -13,7 +13,7 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
 import org.mule.api.expression.ExpressionManager;
 import org.mule.api.transformer.TransformerException;
-import org.mule.module.datapack.i18n.FlatPackMessages;
+import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.util.TemplateParser;
 
 import java.text.DateFormat;
@@ -40,7 +40,7 @@ public class DateTimeColumn extends Column
         }
         catch (ParseException e)
         {
-            FlatPackMessages.DateInboundParseError(value, dateFormatIn);
+            DataPackMessages.DateInboundParseError(value, dateFormatIn);
         }
 
         if (dateIn != null)

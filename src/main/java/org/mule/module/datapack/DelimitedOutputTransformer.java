@@ -14,7 +14,7 @@ import org.mule.api.expression.ExpressionManager;
 import org.mule.api.lifecycle.InitialisationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.module.datapack.columns.Column;
-import org.mule.module.datapack.i18n.FlatPackMessages;
+import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.transformer.AbstractMessageTransformer;
 import org.mule.util.TemplateParser;
 
@@ -44,7 +44,7 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
     {
         if (columns == null || columns.size() == 0)
         {
-            throw new TransformerException(FlatPackMessages.NoColumnsDefinedMessage());
+            throw new TransformerException(DataPackMessages.NoColumnsDefinedMessage());
         }
 
         StringBuilder output = new StringBuilder();

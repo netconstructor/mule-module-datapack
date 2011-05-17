@@ -10,44 +10,44 @@ package org.mule.module.datapack.i18n;
 import org.mule.config.i18n.Message;
 import org.mule.config.i18n.MessageFactory;
 
-public class FlatPackMessages extends MessageFactory
+public class DataPackMessages extends MessageFactory
 {
-    private static final FlatPackMessages factory = new FlatPackMessages();
+    private static final DataPackMessages FACTORY = new DataPackMessages();
 
     private static final String BUNDLE_PATH = getBundlePath("datapack");
 
     public static Message NoColumnsDefinedMessage()
     {
-        return factory.createMessage(BUNDLE_PATH, 1);
+        return FACTORY.createMessage(BUNDLE_PATH, 1);
     }
 
     public static Message NotAbleToConvertToString(String columnName)
     {
-        return factory.createMessage(BUNDLE_PATH, 2, columnName);
+        return FACTORY.createMessage(BUNDLE_PATH, 2, columnName);
     }
 
     public static Message DateInboundParseError(String value, String format)
     {
-        return factory.createMessage(BUNDLE_PATH, 3, value, format);
+        return FACTORY.createMessage(BUNDLE_PATH, 3, value, format);
     }
 
     public static Message NoColumnNameDefined()
     {
-        return factory.createMessage(BUNDLE_PATH, 4);
+        return FACTORY.createMessage(BUNDLE_PATH, 4);
     }
 
     public static Message NoTransformerFound(String transformerName)
     {
-        return factory.createMessage(BUNDLE_PATH, 5, transformerName);
+        return FACTORY.createMessage(BUNDLE_PATH, 5, transformerName);
     }
 
     public static Message NotAbleToConvertPayloadToString()
     {
-        return factory.createMessage(BUNDLE_PATH, 6);
+        return FACTORY.createMessage(BUNDLE_PATH, 6);
     }
 
     public static Message ColumnSizeMisMatch()
     {
-        return factory.createMessage(BUNDLE_PATH, 7);
+        return FACTORY.createMessage(BUNDLE_PATH, 7);
     }
 }

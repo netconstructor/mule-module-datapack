@@ -13,7 +13,7 @@ import org.mule.api.transformer.DataType;
 import org.mule.api.transformer.Transformer;
 import org.mule.api.transformer.TransformerException;
 import org.mule.module.datapack.columns.Column;
-import org.mule.module.datapack.i18n.FlatPackMessages;
+import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.transformer.AbstractTransformer;
 import org.mule.transformer.types.DataTypeFactory;
 import org.mule.util.StringUtils;
@@ -31,7 +31,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
     {
         if (columns == null || columns.size() == 0)
         {
-            throw new TransformerException(FlatPackMessages.NoColumnsDefinedMessage());
+            throw new TransformerException(DataPackMessages.NoColumnsDefinedMessage());
         }
 
         // Convert the type to a string if possible.
@@ -52,7 +52,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
             }
             else
             {
-                throw new TransformerException(FlatPackMessages.NotAbleToConvertPayloadToString());
+                throw new TransformerException(DataPackMessages.NotAbleToConvertPayloadToString());
             }
         }
 
@@ -60,7 +60,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
 
         if (columns.size() != tokens.length)
         {
-            throw new TransformerException(FlatPackMessages.ColumnSizeMisMatch());
+            throw new TransformerException(DataPackMessages.ColumnSizeMisMatch());
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
@@ -70,7 +70,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
         {
             if (StringUtils.isEmpty(columns.get(i).getColumnName()))
             {
-                throw new TransformerException(FlatPackMessages.NoColumnNameDefined());
+                throw new TransformerException(DataPackMessages.NoColumnNameDefined());
             }
 
             map.put(columns.get(i).getColumnName(), tokens[i].trim());

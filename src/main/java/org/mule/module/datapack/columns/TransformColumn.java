@@ -15,7 +15,7 @@ import org.mule.api.expression.ExpressionManager;
 import org.mule.api.transformer.DataType;
 import org.mule.api.transformer.Transformer;
 import org.mule.api.transformer.TransformerException;
-import org.mule.module.datapack.i18n.FlatPackMessages;
+import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.transformer.types.DataTypeFactory;
 import org.mule.util.TemplateParser;
 
@@ -31,7 +31,7 @@ public class TransformColumn extends Column
 
         if (transformer == null)
         {
-            throw new TransformerException(FlatPackMessages.NoTransformerFound(transformerName));
+            throw new TransformerException(DataPackMessages.NoTransformerFound(transformerName));
         }
 
         String value = super.evaluateColumn(message, muleContext, expressionManager, patternInfo);
@@ -58,7 +58,7 @@ public class TransformColumn extends Column
                 }
                 else
                 {
-                    throw new TransformerException(FlatPackMessages.NotAbleToConvertToString(columnName));
+                    throw new TransformerException(DataPackMessages.NotAbleToConvertToString(columnName));
                 }
             }
         }
