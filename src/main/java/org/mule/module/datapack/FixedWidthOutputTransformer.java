@@ -36,7 +36,7 @@ public class FixedWidthOutputTransformer extends AbstractMessageTransformer
     private PadFormat padFormat = PadFormat.LEFT;
     private String newlineChar = "\n";
 
-    protected TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
+    protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
 
     protected ExpressionManager expressionManager;
 
@@ -53,7 +53,7 @@ public class FixedWidthOutputTransformer extends AbstractMessageTransformer
     {
         if (columns == null || columns.size() == 0)
         {
-            throw new TransformerException(DataPackMessages.NoColumnsDefinedMessage());
+            throw new TransformerException(DataPackMessages.noColumnsDefinedMessage());
         }
 
         StringBuilder output = new StringBuilder();

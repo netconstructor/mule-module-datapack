@@ -20,6 +20,15 @@
         </datapack:delimited-output-transformer>
     </flow>
 
+    <flow name="delimitedOutputWithDefaultValue">
+        <vm:inbound-endpoint path="delimitedOutputWithDefaultValue.in" exchange-pattern="request-response"/>
+
+        <datapack:delimited-output-transformer>
+            <datapack:column value="#[payload]"/>
+            <datapack:column value="" default-value="#[payload]"/>
+        </datapack:delimited-output-transformer>
+    </flow>
+
 
     <script:transformer name="scriptTransformer">
         <script:script engine="groovy">
@@ -34,6 +43,5 @@
             <datapack:transform-column value="data" transformer-name="scriptTransformer"/>
         </datapack:delimited-output-transformer>
     </flow>
-
 
 </mule>

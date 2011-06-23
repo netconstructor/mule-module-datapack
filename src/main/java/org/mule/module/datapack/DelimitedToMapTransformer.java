@@ -31,11 +31,11 @@ public class DelimitedToMapTransformer extends AbstractTransformer
     {
         if (columns == null || columns.size() == 0)
         {
-            throw new TransformerException(DataPackMessages.NoColumnsDefinedMessage());
+            throw new TransformerException(DataPackMessages.noColumnsDefinedMessage());
         }
 
         // Convert the type to a string if possible.
-        String value = null;
+        String value;
 
         if (src instanceof String)
         {
@@ -52,7 +52,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
             }
             else
             {
-                throw new TransformerException(DataPackMessages.NotAbleToConvertPayloadToString());
+                throw new TransformerException(DataPackMessages.notAbleToConvertPayloadToString());
             }
         }
 
@@ -60,7 +60,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
 
         if (columns.size() != tokens.length)
         {
-            throw new TransformerException(DataPackMessages.ColumnSizeMisMatch());
+            throw new TransformerException(DataPackMessages.columnSizeMisMatch());
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
@@ -70,7 +70,7 @@ public class DelimitedToMapTransformer extends AbstractTransformer
         {
             if (StringUtils.isEmpty(columns.get(i).getColumnName()))
             {
-                throw new TransformerException(DataPackMessages.NoColumnNameDefined());
+                throw new TransformerException(DataPackMessages.noColumnNameDefined());
             }
 
             map.put(columns.get(i).getColumnName(), tokens[i].trim());

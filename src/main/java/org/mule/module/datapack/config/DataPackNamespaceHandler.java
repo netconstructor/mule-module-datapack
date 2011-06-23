@@ -9,6 +9,7 @@ package org.mule.module.datapack.config;
 
 import org.mule.config.spring.parsers.specific.MessageProcessorDefinitionParser;
 import org.mule.module.datapack.DelimitedToMapTransformer;
+import org.mule.module.datapack.DelimitedToMapsTransformer;
 import org.mule.module.datapack.columns.Column;
 import org.mule.module.datapack.columns.DateTimeColumn;
 import org.mule.module.datapack.columns.TransformColumn;
@@ -22,8 +23,9 @@ public class DataPackNamespaceHandler extends NamespaceHandlerSupport
         registerBeanDefinitionParser("fixed-width-output-transformer", new FixedWidthOutputDefinitionParser());
         registerBeanDefinitionParser("delimited-output-transformer", new DelimitedOutputDefinitionParser());
         registerBeanDefinitionParser("column", new ColumnDefinitionParser("column", Column.class));
-        registerBeanDefinitionParser("date-time-column", new DateTimeColumnDefinitionParser("column", DateTimeColumn.class));
+        registerBeanDefinitionParser("date-time-column", new DateTimeColumnDefinitionParser(DateTimeColumn.class));
         registerBeanDefinitionParser("transform-column", new TransformColumnDefinitionParser("column", TransformColumn.class));
         registerBeanDefinitionParser("delimited-to-map-transformer", new MessageProcessorDefinitionParser(DelimitedToMapTransformer.class));
+        registerBeanDefinitionParser("delimited-to-maps-transformer", new MessageProcessorDefinitionParser(DelimitedToMapsTransformer.class));
     }
 }

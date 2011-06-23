@@ -27,7 +27,7 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
     private String delimiterChar = ",";
     private Boolean trimToLength = false;
 
-    protected TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
+    protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
 
     protected ExpressionManager expressionManager;
 
@@ -44,7 +44,7 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
     {
         if (columns == null || columns.size() == 0)
         {
-            throw new TransformerException(DataPackMessages.NoColumnsDefinedMessage());
+            throw new TransformerException(DataPackMessages.noColumnsDefinedMessage());
         }
 
         StringBuilder output = new StringBuilder();

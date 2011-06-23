@@ -11,9 +11,9 @@ package org.mule.module.datapack.config;
 
 public class DateTimeColumnDefinitionParser extends ColumnDefinitionParser
 {
-    public DateTimeColumnDefinitionParser(String setterMethod, Class<?> clazz)
+    public DateTimeColumnDefinitionParser(Class<?> clazz)
     {
-        super(setterMethod, clazz);
+        super("column", clazz);
         this.addAlias("date-format-in", "dateFormatIn");
         this.addAlias("date-format-out", "dateFormatOut");
     }

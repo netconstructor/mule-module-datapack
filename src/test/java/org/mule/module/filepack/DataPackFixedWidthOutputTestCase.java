@@ -12,6 +12,8 @@ import org.mule.module.client.MuleClient;
 import org.mule.tck.FunctionalTestCase;
 import org.mule.transport.NullPayload;
 
+import java.util.HashMap;
+
 public class DataPackFixedWidthOutputTestCase extends FunctionalTestCase
 {
     protected String getConfigResources()
@@ -40,5 +42,29 @@ public class DataPackFixedWidthOutputTestCase extends FunctionalTestCase
         assertFalse(result.getPayload() instanceof NullPayload);
 
         assertEquals("0data00data\n", result.getPayloadAsString());
+    }
+
+    public void testFixedWidthOutputNullValues() throws Exception
+    {
+        MuleClient client = new MuleClient(muleContext);
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("data", "data");
+        MuleMessage result = client.send("vm://fixedwidthoutputnullvalues.in", map, null);
+
+        assertNotNull(result);
+        assertNull(result.getExceptionPayload());
+        assertFalse(result.getPayload() instanceof NullPayload);
+    }
+
+    public void testFixedWidthOutputDefaultPadding() throws Exception
+    {
+        MuleClient client = new MuleClient(muleContext);
+        MuleMessage result = client.send("vm://fixedwidthoutputdefaultpad.in", "data", null);
+
+        assertNotNull(result);
+        assertNull(result.getExceptionPayload());
+        assertFalse(result.getPayload() instanceof NullPayload);
+
+
     }
 }

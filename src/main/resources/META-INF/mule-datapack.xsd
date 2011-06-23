@@ -152,6 +152,29 @@
         </xsd:complexContent>
     </xsd:complexType>
 
+    <xsd:element name="delimited-to-maps-transformer" type="DelimitedToMapsType"
+                     substitutionGroup="mule:abstract-transformer">
+            <xsd:annotation>
+                <xsd:documentation>
+
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:complexType name="DelimitedToMapsType">
+            <xsd:complexContent>
+                <xsd:extension base="DelimitedToMapType">
+                    <xsd:attribute name="lineDelimiter" type="xsd:string" use="optional">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This is the delimiter used when breaking up the file of data into each row.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:attribute>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+
+
     <xsd:element name="abstract-column" type="abstractColumnType">
     </xsd:element>
     <xsd:complexType name="abstractColumnType">

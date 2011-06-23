@@ -16,38 +16,43 @@ public class DataPackMessages extends MessageFactory
 
     private static final String BUNDLE_PATH = getBundlePath("datapack");
 
-    public static Message NoColumnsDefinedMessage()
+    public static Message noColumnsDefinedMessage()
     {
         return FACTORY.createMessage(BUNDLE_PATH, 1);
     }
 
-    public static Message NotAbleToConvertToString(String columnName)
+    public static Message notAbleToConvertToString(String columnName)
     {
         return FACTORY.createMessage(BUNDLE_PATH, 2, columnName);
     }
 
-    public static Message DateInboundParseError(String value, String format)
+    public static Message dateInboundParseError(String value, String format)
     {
         return FACTORY.createMessage(BUNDLE_PATH, 3, value, format);
     }
 
-    public static Message NoColumnNameDefined()
+    public static Message noColumnNameDefined()
     {
         return FACTORY.createMessage(BUNDLE_PATH, 4);
     }
 
-    public static Message NoTransformerFound(String transformerName)
+    public static Message noTransformerFound(String transformerName)
     {
         return FACTORY.createMessage(BUNDLE_PATH, 5, transformerName);
     }
 
-    public static Message NotAbleToConvertPayloadToString()
+    public static Message notAbleToConvertPayloadToString()
     {
         return FACTORY.createMessage(BUNDLE_PATH, 6);
     }
 
-    public static Message ColumnSizeMisMatch()
+    public static Message columnSizeMisMatch()
     {
         return FACTORY.createMessage(BUNDLE_PATH, 7);
+    }
+
+    public static Message payloadNotList()
+    {
+        return FACTORY.createMessage(BUNDLE_PATH, 8);
     }
 }

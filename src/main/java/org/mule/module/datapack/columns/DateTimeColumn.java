@@ -40,7 +40,7 @@ public class DateTimeColumn extends Column
         }
         catch (ParseException e)
         {
-            DataPackMessages.DateInboundParseError(value, dateFormatIn);
+            DataPackMessages.dateInboundParseError(value, dateFormatIn);
         }
 
         if (dateIn != null)

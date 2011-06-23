@@ -33,31 +33,44 @@ public class Column
     public String evaluateColumn(MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager,
                                  TemplateParser.PatternInfo patternInfo) throws TransformerException
     {
+        String result = evaluate(value, message, muleContext, expressionManager, patternInfo);
+
+        if (StringUtils.isEmpty(result) && !StringUtils.isEmpty(defaultValue))
+        {
+            result = evaluate(defaultValue, message, muleContext, expressionManager, patternInfo);
+        }
+
+        return result;
+    }
+
+    protected String evaluate(String expression, MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager,
+                                 TemplateParser.PatternInfo patternInfo) throws TransformerException
+    {
         Object evaluatedValue;
 
         // If string contains is a single expression then evaluate otherwise
         // parse. We can't use parse() always because that will convert
         // everything to a string
-        if (value.startsWith(patternInfo.getPrefix())
-                && value.endsWith(patternInfo.getSuffix()))
+        if (expression.startsWith(patternInfo.getPrefix())
+                && expression.endsWith(patternInfo.getSuffix()))
         {
-            evaluatedValue = expressionManager.evaluate(value, message);
+            evaluatedValue = expressionManager.evaluate(expression, message);
         }
         else
         {
-            evaluatedValue = expressionManager.parse(value, message);
+            evaluatedValue = expressionManager.parse(expression, message);
         }
 
-        String value;
+        String result;
 
         // Get the value into a string since that is the final output.
         if (evaluatedValue == null)
         {
-            value = "";
+            result = "";
         }
         else if (evaluatedValue instanceof String)
         {
-            value = (String) evaluatedValue;
+            result = (String) evaluatedValue;
         }
         else
         {
@@ -66,22 +79,15 @@ public class Column
 
             if (transformer != null)
             {
-                value = (String) transformer.transform(evaluatedValue);
+                result = (String) transformer.transform(evaluatedValue);
             }
             else
             {
-                throw new TransformerException(DataPackMessages.NotAbleToConvertToString(columnName));
+                throw new TransformerException(DataPackMessages.notAbleToConvertToString(columnName));
             }
         }
 
-        value = value.trim();
-
-        if (StringUtils.isEmpty(value) && !StringUtils.isEmpty(defaultValue))
-        {
-            value = defaultValue;
-        }
-
-        return value;
+        return result.trim();
     }
 
     public String getValue()

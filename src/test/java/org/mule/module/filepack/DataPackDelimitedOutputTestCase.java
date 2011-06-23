@@ -44,4 +44,16 @@ public class DataPackDelimitedOutputTestCase extends FunctionalTestCase
 
         assertEquals(result.getPayload(), "transformdata\n");
     }
+
+    public void testDelimitedOutputWithDefaultValues() throws Exception
+    {
+        MuleClient client = new MuleClient(muleContext);
+        MuleMessage result = client.send("vm://delimitedOutputWithDefaultValue.in", "data", null);
+
+        assertNotNull(result);
+        assertNull(result.getExceptionPayload());
+        assertFalse(result.getPayload() instanceof NullPayload);
+
+        assertEquals(result.getPayload(), "data,data\n");
+    }
 }

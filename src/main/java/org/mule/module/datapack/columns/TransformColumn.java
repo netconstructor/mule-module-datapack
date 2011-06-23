@@ -31,7 +31,7 @@ public class TransformColumn extends Column
 
         if (transformer == null)
         {
-            throw new TransformerException(DataPackMessages.NoTransformerFound(transformerName));
+            throw new TransformerException(DataPackMessages.noTransformerFound(transformerName));
         }
 
         String value = super.evaluateColumn(message, muleContext, expressionManager, patternInfo);
@@ -58,7 +58,7 @@ public class TransformColumn extends Column
                 }
                 else
                 {
-                    throw new TransformerException(DataPackMessages.NotAbleToConvertToString(columnName));
+                    throw new TransformerException(DataPackMessages.notAbleToConvertToString(columnName));
                 }
             }
         }
