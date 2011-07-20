@@ -64,6 +64,10 @@ public class FixedWidthOutputTransformer extends AbstractMessageTransformer
 
             int length = Integer.parseInt(column.getLength());
 
+            //Added by Eugene - that will havdle situations where data does not exist
+            if (value == null)
+                value = "";
+                
             if (value.length() > length)
             {
                 output.append(value.substring(0, length));
