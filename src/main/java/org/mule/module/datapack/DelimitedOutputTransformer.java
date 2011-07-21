@@ -24,7 +24,7 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
 {
     private List<Column> columns;
     private String newlineChar = "\n";
-    private String delimiterChar = ",";
+    private String delimiterChar = "\t";
     private Boolean trimToLength = false;
 
     protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
@@ -104,6 +104,10 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
 
     public void setDelimiterChar(String delimiterChar)
     {
+		if(delimiterChar.equals("\\t"))
+		{
+			this.delimiterChar = "\t";
+		}
         this.delimiterChar = delimiterChar;
     }
 
