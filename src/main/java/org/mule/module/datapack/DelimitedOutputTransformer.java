@@ -26,6 +26,7 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
     private String newlineChar = "\n";
     private String delimiterChar = "\t";
     private Boolean trimToLength = false;
+    private Boolean addSpace = false;
 
     protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
 
@@ -62,6 +63,12 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
             else
             {
                 output.append(value);
+            }
+            
+            // check to see if a space is needed
+            if (addSpace && value.length() == 0)
+            {
+            	output.append(' ');
             }
 
             // Only put the delimiter on everything but the last column.
@@ -119,5 +126,15 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
     public void setTrimToLength(Boolean trimToLength)
     {
         this.trimToLength = trimToLength;
+    }
+    
+    public Boolean getAddSpace()
+    {
+    	return addSpace;
+    }
+    
+    public void setAddSpace(Boolean addSpace)
+    {
+    	this.addSpace = addSpace;
     }
 }

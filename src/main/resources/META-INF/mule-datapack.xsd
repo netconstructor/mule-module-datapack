@@ -110,6 +110,14 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
+                <xsd:attribute name="add-space" type="xsd:boolean" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Specifies if the columns should contain one space character when the value is null.
+                            By default this is false.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

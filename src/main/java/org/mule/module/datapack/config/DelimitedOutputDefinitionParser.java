@@ -20,5 +20,6 @@ public class DelimitedOutputDefinitionParser extends MessageProcessorDefinitionP
         addAlias("newline-char", "newlineChar");
         addAlias("delimiter-char", "delimiterChar");
         addAlias("trim-to-length", "trimToLength");
+        addAlias("add-space", "addSpace");
     }
 }
