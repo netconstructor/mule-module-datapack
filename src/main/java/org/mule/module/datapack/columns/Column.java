@@ -28,6 +28,7 @@ public class Column
     public String columnIndex;
     public String defaultValue;
     public String padChar = null;
+    public String lineBreak;
 
 
     public String evaluateColumn(MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager,
@@ -148,5 +149,15 @@ public class Column
     public void setPadChar(String padChar)
     {
         this.padChar = padChar;
+    }
+    
+    public String getLineBreak()
+    {
+        return lineBreak;
+    }
+
+    public void setLineBreak(String lineBreak)
+    {
+        this.lineBreak = lineBreak;
     }
 }

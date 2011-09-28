@@ -71,8 +71,13 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
             	output.append(' ');
             }
 
-            // Only put the delimiter on everything but the last column.
-            if (i < columns.size() - 1)
+            // column marked as a linebreak
+            if (column.getLineBreak() != null && Boolean.parseBoolean(column.getLineBreak()))
+            {
+            	output.append(newlineChar);
+            }
+            // Only put the delimiter on everything except for the last column or column marked as line break
+            else if (i < columns.size() - 1)
             {
                 output.append(delimiterChar);
             }
