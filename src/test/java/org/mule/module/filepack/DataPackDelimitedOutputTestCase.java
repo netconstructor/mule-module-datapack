@@ -42,7 +42,7 @@ public class DataPackDelimitedOutputTestCase extends FunctionalTestCase
         assertNull(result.getExceptionPayload());
         assertFalse(result.getPayload() instanceof NullPayload);
 
-        assertEquals(result.getPayload(), "transformdata\n");
+        assertEquals("transformdata\n", result.getPayload());
     }
 
     public void testDelimitedOutputWithDefaultValues() throws Exception
@@ -54,6 +54,6 @@ public class DataPackDelimitedOutputTestCase extends FunctionalTestCase
         assertNull(result.getExceptionPayload());
         assertFalse(result.getPayload() instanceof NullPayload);
 
-        assertEquals(result.getPayload(), "data,data\n");
+        assertEquals("data\tdata\n", result.getPayload());
     }
 }
