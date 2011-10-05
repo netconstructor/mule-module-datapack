@@ -8,12 +8,12 @@
    <artifactId>mule-module-datapack</artifactId>
    <packaging>jar</packaging>
    <name>Mule DataPack Module</name>
-   <version>1.0-SNAPSHOT</version>
+   <version>1.1-SNAPSHOT</version>
    <description>Provides transformation to fixed width and delimited files. </description>
    <url>http://www.muleforge.org/projects/mule-module-datapack</url>
 
    <properties>
-        <mule.version>3.1.1</mule.version>
+        <mule.version>3.2.0</mule.version>
         <!-- Tools properties -->
         <eclipsePluginVersion>2.5</eclipsePluginVersion>
         <vmtype>org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType</vmtype>
