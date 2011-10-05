@@ -218,6 +218,7 @@
                 <xsd:attribute name="default-value" type="xsd:string" use="optional"/>
                 <xsd:attribute name="pad-char" type="xsd:string" use="optional"/>
                 <xsd:attribute name="line-break" type="xsd:string" use="optional"/>
+                <xsd:attribute name="enclose-char" type="xsd:string" use="optional"/>
             </xsd:extension>
         </xsd:complexContent>
 

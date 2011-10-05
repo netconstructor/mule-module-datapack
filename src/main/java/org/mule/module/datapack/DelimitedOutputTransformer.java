@@ -54,10 +54,21 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
         {
             Column column = columns.get(i);
             String value = column.evaluateColumn(message,  muleContext, expressionManager, patternInfo);
+            
+            String encloseChar = column.getEncloseChar();
+            boolean bEnclose = false;
+            // Open quote to enclose string
+            if (encloseChar != null) {
+            	output.append(encloseChar);
+            	bEnclose = true;
+            }
 
             if (column.getLength() != null && trimToLength)
             {
                 int length = Integer.parseInt(column.getLength());
+                int vlen = value.length();
+                if (vlen < length)
+                	length = vlen;
                 output.append(value.substring(0, length));
             }
             else
@@ -71,6 +82,12 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
             	output.append(' ');
             }
 
+            // Closing Quote to enclose string
+            if (bEnclose) {
+            	output.append(encloseChar);
+            }
+
+            
             // column marked as a linebreak
             if (column.getLineBreak() != null && Boolean.parseBoolean(column.getLineBreak()))
             {

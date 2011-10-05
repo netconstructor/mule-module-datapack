@@ -19,5 +19,7 @@ public class ColumnDefinitionParser extends ChildDefinitionParser
         this.addAlias("column-name", "columnName");
         this.addAlias("default-value", "defaultValue");
         this.addAlias("pad-char", "padChar");
+        this.addAlias("line-break", "lineBreak");
+        this.addAlias("enclose-char", "encloseChar");
     }
 }

@@ -6,4 +6,6 @@
 *.ipr
 *.log
 target/*
-.gitignore
+.classpath
+.project
+.settings/*
