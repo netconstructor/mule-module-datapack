@@ -14,7 +14,7 @@
     <flow name="delimitedOutputWithPipes">
         <vm:inbound-endpoint path="delimitedOutputWithPipes.in" exchange-pattern="request-response"/>
 
-        <datapack:delimited-output-transformer delimiter-char="|">
+        <datapack:delimited-output-transformer delimiterChar="|">
             <datapack:column value="#[payload]"/>
             <datapack:column value="#[payload]"/>
         </datapack:delimited-output-transformer>
@@ -25,7 +25,7 @@
 
         <datapack:delimited-output-transformer>
             <datapack:column value="#[payload]"/>
-            <datapack:column value="" default-value="#[payload]"/>
+            <datapack:column value="" defaultValue="#[payload]"/>
         </datapack:delimited-output-transformer>
     </flow>
 

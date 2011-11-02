@@ -60,7 +60,7 @@ public class FixedWidthOutputTransformer extends AbstractMessageTransformer
 
         for (Column column : this.columns)
         {
-            String value = column.evaluateColumn(message, muleContext, expressionManager, patternInfo);
+            String value = column.evaluateColumn(message, muleContext);
 
             int length = Integer.parseInt(column.getLength());
 

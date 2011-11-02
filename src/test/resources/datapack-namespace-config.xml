@@ -13,12 +13,12 @@
         <vm:inbound-endpoint path="fixedwidthoutput.in"/>
 
         <datapack:fixed-width-output-transformer>
-            <datapack:column column-name="column1" length="5" value="#[payload]"/>
-            <datapack:column column-name="column2" length="6" value="#[payload]"/>
+            <datapack:column columnName="column1" length="5" value="#[payload]"/>
+            <datapack:column columnName="column2" length="6" value="#[payload]"/>
         </datapack:fixed-width-output-transformer>
 
         <datapack:delimited-output-transformer>
-            <datapack:column column-name="column3" length="5" value="#[payload]"/>
+            <datapack:column columnName="column3" length="5" value="#[payload]"/>
         </datapack:delimited-output-transformer>
     </flow>
 

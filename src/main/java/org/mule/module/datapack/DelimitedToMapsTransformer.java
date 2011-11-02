@@ -12,6 +12,7 @@ package org.mule.module.datapack;
 import org.mule.api.transformer.DataType;
 import org.mule.api.transformer.Transformer;
 import org.mule.api.transformer.TransformerException;
+import org.mule.module.datapack.columns.Column;
 import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.transformer.types.DataTypeFactory;
 
@@ -19,10 +20,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class DelimitedToMapsTransformer extends DelimitedToMapTransformer
 {
     private String lineDelimiter = "\n";
+    private int readFromLine = 1;
 
     @Override
     protected Object doTransform(Object src, String enc) throws TransformerException
@@ -52,9 +55,14 @@ public class DelimitedToMapsTransformer extends DelimitedToMapTransformer
 
         List<Map<String, String>> maps = new ArrayList<Map<String, String>>();
 
+        int i = 1;
         for (String line : lines)
         {
-            maps.add((Map<String, String>)super.doTransform(line, enc));
+            if(i >= getReadFromLine())
+            {
+                maps.add((Map<String, String>)super.doTransform(line, enc));
+            }
+            i++;
         }
 
         return maps;
@@ -68,5 +76,15 @@ public class DelimitedToMapsTransformer extends DelimitedToMapTransformer
     public void setLineDelimiter(String lineDelimiter)
     {
         this.lineDelimiter = lineDelimiter;
+    }
+
+    public int getReadFromLine()
+    {
+        return readFromLine;
+    }
+
+    public void setReadFromLine(int readFromLine)
+    {
+        this.readFromLine = readFromLine;
     }
 }

@@ -9,6 +9,8 @@
  */
 package org.mule.module.datapack;
 
+import org.mule.DefaultMuleMessage;
+import org.mule.api.MuleMessage;
 import org.mule.api.transformer.DataType;
 import org.mule.api.transformer.Transformer;
 import org.mule.api.transformer.TransformerException;
@@ -20,11 +22,13 @@ import org.mule.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DelimitedToMapTransformer extends AbstractTransformer
 {
     private List<Column> columns;
     private String delimiter = ",";
+    private boolean ignoreExtraColumns = true;
 
     @Override
     protected Object doTransform(Object src, String enc) throws TransformerException
@@ -60,13 +64,19 @@ public class DelimitedToMapTransformer extends AbstractTransformer
 
         if (columns.size() != tokens.length)
         {
-            throw new TransformerException(DataPackMessages.columnSizeMisMatch());
+            if (isIgnoreExtraColumns())
+            {
+                if(logger.isDebugEnabled()) logger.debug("There are more fields than columns defined. 'Ignore Extra Columns' is set to true so only the first " + columns.size() + " will be processed");
+            }
+            else
+            {
+                throw new TransformerException(DataPackMessages.columnSizeMisMatch());
+            }
         }
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
 
-
-        for (int i = 0; i < tokens.length; i++)
+        for (int i = 0; i < columns.size(); i++)
         {
             if (StringUtils.isEmpty(columns.get(i).getColumnName()))
             {
@@ -76,7 +86,26 @@ public class DelimitedToMapTransformer extends AbstractTransformer
             map.put(columns.get(i).getColumnName(), tokens[i].trim());
         }
 
-        return map;
+        return doMappings(map);
+    }
+
+    protected Map doMappings(Map<String, String> map) throws TransformerException
+    {
+        Map<String, String> newMap = new HashMap<String, String>(map.size());
+
+        String name;
+        String value;
+        MuleMessage data = new DefaultMuleMessage(map, muleContext);
+
+        for (Column column : getColumns())
+        {
+            if(column.isSkipColumn()) continue;
+
+            name = column.getMappedColumnName();
+            value = column.evaluateColumn(data, muleContext);
+            newMap.put(name, value);
+        }
+        return newMap;
     }
 
     public List<Column> getColumns()
@@ -98,4 +127,15 @@ public class DelimitedToMapTransformer extends AbstractTransformer
     {
         this.delimiter = delimiter;
     }
+
+    public boolean isIgnoreExtraColumns()
+    {
+        return ignoreExtraColumns;
+    }
+
+    public void setIgnoreExtraColumns(boolean ignoreExtraColumns)
+    {
+        this.ignoreExtraColumns = ignoreExtraColumns;
+    }
+
 }

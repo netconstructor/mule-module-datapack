@@ -3,21 +3,20 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:datapack="http://www.mulesoft.org/schema/mule/datapack"
       xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
-      xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
     xsi:schemaLocation="
-        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/datapack http://www.mulesoft.org/schema/mule/datapack/3.2/mule-datapack.xsd
         http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd
-        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/3.2/mule-scripting.xsd
         ">
 
-    <flow name="delimitedToMap">
+    <flow name="delimitedToMap" processingStrategy="synchronous">
         <vm:inbound-endpoint path="delimitedToMap.in" exchange-pattern="request-response"/>
 
-        <datapack:delimited-to-map-transformer delimiter="\t">
-            <datapack:column columnName="value1"/>
-            <datapack:column columnName="value2"/>
-        </datapack:delimited-to-map-transformer>
+        <datapack:delimited-to-maps-transformer delimiter="," lineDelimiter="\r" readFromLine="2">
+            <datapack:column columnName="AccountId" mappedColumnName="Id"/>
+            <datapack:column columnName="LastName" skipColumn="true"/>
+            <datapack:column columnName="FirstName" mappedColumnName="Name" value="#[groovy:payload.get('FirstName') + '-' + payload.get('LastName')]"/>
+        </datapack:delimited-to-maps-transformer>
     </flow>
 
 </mule>

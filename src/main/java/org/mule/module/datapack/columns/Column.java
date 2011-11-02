@@ -22,32 +22,41 @@ import org.mule.util.TemplateParser;
 
 public class Column
 {
-    public String columnName = null;
-    public String length;
-    public String value;
-    public String columnIndex;
-    public String defaultValue;
-    public String padChar = null;
-    public String lineBreak;
-    public String encloseChar;
+    public static final String CURRENT_VALUE_PATTERN = "#[map-payload:%s]";
+    private String columnName = null;
+    private String mappedColumnName = null;
+    private String length;
+    private String value;
+    private String columnIndex;
+    private String defaultValue;
+    private String padChar = null;
+    private String lineBreak;
+    private String encloseChar;
+    private boolean skipColumn = false;
+
+    protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
 
 
-    public String evaluateColumn(MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager,
-                                 TemplateParser.PatternInfo patternInfo) throws TransformerException
+
+    public String evaluateColumn(MuleMessage message, MuleContext muleContext) throws TransformerException
     {
-        String result = evaluate(value, message, muleContext, expressionManager, patternInfo);
+        //If no value is set, default to the original column value
+        if(value==null) value = String.format(CURRENT_VALUE_PATTERN, columnName);
+
+        String result = evaluate(value, message, muleContext);
 
         if (StringUtils.isEmpty(result) && !StringUtils.isEmpty(defaultValue))
         {
-            result = evaluate(defaultValue, message, muleContext, expressionManager, patternInfo);
+            result = evaluate(defaultValue, message, muleContext);
         }
 
         return result;
     }
 
-    protected String evaluate(String expression, MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager,
-                                 TemplateParser.PatternInfo patternInfo) throws TransformerException
+    protected String evaluate(String expression, MuleMessage message, MuleContext muleContext) throws TransformerException
     {
+        ExpressionManager expressionManager = muleContext.getExpressionManager();
+
         Object evaluatedValue;
 
         // If string contains is a single expression then evaluate otherwise
@@ -170,5 +179,25 @@ public class Column
     public void setEncloseChar(String encloseChar)
     {
         this.encloseChar = encloseChar;
+    }
+
+    public String getMappedColumnName()
+    {
+        return (mappedColumnName ==null ? getColumnName() : mappedColumnName);
+    }
+
+    public void setMappedColumnName(String mappedColumnName)
+    {
+        this.mappedColumnName = mappedColumnName;
+    }
+
+    public boolean isSkipColumn()
+    {
+        return skipColumn;
+    }
+
+    public void setSkipColumn(boolean skipColumn)
+    {
+        this.skipColumn = skipColumn;
     }
 }

@@ -11,21 +11,18 @@ package org.mule.module.datapack.columns;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
-import org.mule.api.expression.ExpressionManager;
 import org.mule.api.transformer.DataType;
 import org.mule.api.transformer.Transformer;
 import org.mule.api.transformer.TransformerException;
 import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.transformer.types.DataTypeFactory;
-import org.mule.util.TemplateParser;
 
 public class TransformColumn extends Column
 {
     private String transformerName;
 
     @Override
-    public String evaluateColumn(MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager,
-                                 TemplateParser.PatternInfo patternInfo) throws TransformerException
+    public String evaluateColumn(MuleMessage message, MuleContext muleContext) throws TransformerException
     {
         Transformer transformer = muleContext.getRegistry().lookupTransformer(transformerName);
 
@@ -34,7 +31,7 @@ public class TransformColumn extends Column
             throw new TransformerException(DataPackMessages.noTransformerFound(transformerName));
         }
 
-        String value = super.evaluateColumn(message, muleContext, expressionManager, patternInfo);
+        String value = super.evaluateColumn(message, muleContext);
 
         // Don't do the transformation if the original value was null since we will be doing the transformation
         // on the default value.
@@ -58,7 +55,7 @@ public class TransformColumn extends Column
                 }
                 else
                 {
-                    throw new TransformerException(DataPackMessages.notAbleToConvertToString(columnName));
+                    throw new TransformerException(DataPackMessages.notAbleToConvertToString(getColumnName()));
                 }
             }
         }

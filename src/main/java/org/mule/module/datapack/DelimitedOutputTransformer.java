@@ -28,18 +28,6 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
     private Boolean trimToLength = false;
     private Boolean addSpace = false;
 
-    protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
-
-    protected ExpressionManager expressionManager;
-
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        super.initialise();
-
-        expressionManager = muleContext.getExpressionManager();
-    }
-
     @Override
     public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException
     {
@@ -53,7 +41,7 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
         for (int i = 0; i < columns.size(); i++)
         {
             Column column = columns.get(i);
-            String value = column.evaluateColumn(message,  muleContext, expressionManager, patternInfo);
+            String value = column.evaluateColumn(message,  muleContext);
             
             String encloseChar = column.getEncloseChar();
             boolean bEnclose = false;

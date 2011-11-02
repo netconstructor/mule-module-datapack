@@ -14,9 +14,9 @@
     <flow name="fixedwidthoutputrightpad">
         <vm:inbound-endpoint path="fixedwidthoutputrightpad.in" exchange-pattern="request-response"/>
 
-        <datapack:fixed-width-output-transformer pad-format="right">
-            <datapack:column column-name="column1" length="5" value="#[payload]"/>
-            <datapack:column column-name="column2" length="6" value="#[payload]"/>
+        <datapack:fixed-width-output-transformer padFormat="right">
+            <datapack:column columnName="column1" length="5" value="#[payload]"/>
+            <datapack:column columnName="column2" length="6" value="#[payload]"/>
         </datapack:fixed-width-output-transformer>
     </flow>
 
@@ -24,26 +24,26 @@
         <vm:inbound-endpoint path="fixedwidthoutputdefaultpad.in" exchange-pattern="request-response"/>
 
         <datapack:fixed-width-output-transformer>
-            <datapack:column column-name="column1" length="2" value="#[payload]"/>
-            <datapack:column column-name="column2" length="6" value="#[payload]"/>
+            <datapack:column columnName="column1" length="2" value="#[payload]"/>
+            <datapack:column columnName="column2" length="6" value="#[payload]"/>
         </datapack:fixed-width-output-transformer>
     </flow>
 
     <flow name="fixedwidthoutputnondefaultpadding">
         <vm:inbound-endpoint path="fixedwidthoutputnondefaultpadding.in" exchange-pattern="request-response"/>
 
-        <datapack:fixed-width-output-transformer pad-char="0">
-            <datapack:column column-name="column1" length="5" value="#[payload]"/>
-            <datapack:column column-name="column2" length="6" value="#[payload]"/>
+        <datapack:fixed-width-output-transformer padChar="0">
+            <datapack:column columnName="column1" length="5" value="#[payload]"/>
+            <datapack:column columnName="column2" length="6" value="#[payload]"/>
         </datapack:fixed-width-output-transformer>
     </flow>
 
     <flow name="fixedwidthoutputnullvalues">
         <vm:inbound-endpoint path="fixedwidthoutputnullvalues.in" exchange-pattern="request-response"/>
 
-        <datapack:fixed-width-output-transformer pad-char="0">
-            <datapack:column column-name="column1" length="5" value="#[map-payload:data]"/>
-            <datapack:column column-name="column2" length="6" value=""/>
+        <datapack:fixed-width-output-transformer padChar="0">
+            <datapack:column columnName="column1" length="5" value="#[map-payload:data]"/>
+            <datapack:column columnName="column2" length="6" value=""/>
         </datapack:fixed-width-output-transformer>
     </flow>
 

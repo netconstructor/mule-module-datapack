@@ -11,10 +11,8 @@ package org.mule.module.datapack.columns;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
-import org.mule.api.expression.ExpressionManager;
 import org.mule.api.transformer.TransformerException;
 import org.mule.module.datapack.i18n.DataPackMessages;
-import org.mule.util.TemplateParser;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -27,9 +25,9 @@ public class DateTimeColumn extends Column
     public String dateFormatOut;
 
     @Override
-    public String evaluateColumn(MuleMessage message, MuleContext muleContext, ExpressionManager expressionManager, TemplateParser.PatternInfo patternInfo) throws TransformerException
+    public String evaluateColumn(MuleMessage message, MuleContext muleContext) throws TransformerException
     {
-        String value = super.evaluateColumn(message, muleContext, expressionManager, patternInfo);
+        String value = super.evaluateColumn(message, muleContext);
 
         DateFormat dfIn = new SimpleDateFormat(dateFormatIn);
         Date dateIn = null;

@@ -42,21 +42,21 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsd:sequence>
-                <xsd:attribute name="pad-char" type="xsd:string" use="optional">
+                <xsd:attribute name="padChar" type="xsd:string" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             The padding char to be used, by default a space is used.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="pad-format" type="padFormatType" use="optional">
+                <xsd:attribute name="padFormat" type="padFormatType" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             This specifies which side the padding should occur on, by default it is the left.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="newline-char" type="xsd:string" use="optional">
+                <xsd:attribute name="newlineChar" type="xsd:string" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             This is the newline character to used for the row once written out.
@@ -87,14 +87,14 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsd:sequence>
-                <xsd:attribute name="delimiter-char" type="xsd:string" use="optional">
+                <xsd:attribute name="delimiterChar" type="xsd:string" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             The delimiter to be used, by default a comma is used.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="trim-to-length" type="xsd:boolean" use="optional">
+                <xsd:attribute name="trimToLength" type="xsd:boolean" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             Specifies if the columns should be trimed to the length specified in the column definition.
@@ -102,7 +102,7 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="newline-char" type="xsd:string" use="optional">
+                <xsd:attribute name="newlineChar" type="xsd:string" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             This is the newline character to used for the row once written out, by default this is a
@@ -110,7 +110,7 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="add-space" type="xsd:boolean" use="optional">
+                <xsd:attribute name="addSpace" type="xsd:boolean" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             Specifies if the columns should contain one space character when the value is null.
@@ -156,6 +156,14 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
+                <xsd:attribute name="ignoreExtraColumns" type="xsd:boolean" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            If additional columns are added to the file (which commonly happens when new data is added) this flag will allow Mule to process the new file without throwing an error.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
@@ -178,6 +186,14 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:attribute>
+                    <xsd:attribute name="readFromLine" type="xsd:int" use="optional">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Determines which line to start reading data from in the delimited file
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:attribute>
+
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
@@ -194,10 +210,17 @@
     <xsd:complexType name="columnType">
         <xsd:complexContent>
             <xsd:extension base="abstractColumnType">
-                <xsd:attribute name="column-name" type="xsd:string" use="optional">
+                <xsd:attribute name="columnName" type="xsd:string" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
                             Name of the column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="skipColumn" type="xsd:boolean" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            When parsing the file this flag will control whether the column data is included in the resulting dataset.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -215,10 +238,11 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="default-value" type="xsd:string" use="optional"/>
-                <xsd:attribute name="pad-char" type="xsd:string" use="optional"/>
-                <xsd:attribute name="line-break" type="xsd:string" use="optional"/>
-                <xsd:attribute name="enclose-char" type="xsd:string" use="optional"/>
+                <xsd:attribute name="mappedColumnName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="defaultValue" type="xsd:string" use="optional"/>
+                <xsd:attribute name="padChar" type="xsd:string" use="optional"/>
+                <xsd:attribute name="lineBreak" type="xsd:string" use="optional"/>
+                <xsd:attribute name="encloseChar" type="xsd:string" use="optional"/>
             </xsd:extension>
         </xsd:complexContent>
 
