@@ -55,4 +55,14 @@ public class DataPackMessages extends MessageFactory
     {
         return FACTORY.createMessage(BUNDLE_PATH, 8);
     }
+
+    public static Message indexOutOfBoundsBadDataAtIndex(int index)
+    {
+        return FACTORY.createMessage(BUNDLE_PATH, 9, index);
+    }
+
+    public static Message noCSVHeaders()
+    {
+        return FACTORY.createMessage(BUNDLE_PATH, 10);
+    }
 }

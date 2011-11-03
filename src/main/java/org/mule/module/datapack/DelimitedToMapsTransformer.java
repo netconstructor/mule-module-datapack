@@ -12,20 +12,27 @@ package org.mule.module.datapack;
 import org.mule.api.transformer.DataType;
 import org.mule.api.transformer.Transformer;
 import org.mule.api.transformer.TransformerException;
-import org.mule.module.datapack.columns.Column;
 import org.mule.module.datapack.i18n.DataPackMessages;
+import org.mule.transformer.AbstractTransformer;
 import org.mule.transformer.types.DataTypeFactory;
 
+import com.csv.CsvReader;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
-public class DelimitedToMapsTransformer extends DelimitedToMapTransformer
+public class DelimitedToMapsTransformer extends AbstractTransformer
 {
-    private String lineDelimiter = "\n";
-    private int readFromLine = 1;
+    private Delimiter lineDelimiter;
+    private Delimiter delimiter = Delimiter.COMMA;
+    private boolean skipEmptyRows = true;
+    private boolean trimWhitespace = true;
+
 
     @Override
     protected Object doTransform(Object src, String enc) throws TransformerException
@@ -51,40 +58,85 @@ public class DelimitedToMapsTransformer extends DelimitedToMapTransformer
             }
         }
 
-        List<String> lines = Arrays.asList(value.split(lineDelimiter));
+        CsvReader reader = new CsvReader(new ByteArrayInputStream(value.getBytes()), Delimiter.getChar(getDelimiter()), Charset.forName(enc));
 
         List<Map<String, String>> maps = new ArrayList<Map<String, String>>();
 
-        int i = 1;
-        for (String line : lines)
+        try
         {
-            if(i >= getReadFromLine())
+            if(lineDelimiter!=null) reader.setRecordDelimiter(Delimiter.getChar(lineDelimiter));
+
+            reader.setSkipEmptyRecords(isSkipEmptyRows());
+            reader.setTrimWhitespace(isTrimWhitespace());
+            reader.readHeaders();
+
+            String[] headers = reader.getHeaders();
+            if(headers==null)
             {
-                maps.add((Map<String, String>)super.doTransform(line, enc));
+                throw new TransformerException(DataPackMessages.noCSVHeaders());
             }
-            i++;
+            
+            while(reader.readRecord())
+            {
+                Map<String, String> row = new HashMap<String, String>();
+                String[] values = reader.getValues();
+
+                for (int j = 0; j < headers.length; j++)
+                {
+                     row.put(headers[j], values[j]);
+                }
+                maps.add(row);
+            }
+        }
+        catch (IOException e)
+        {
+            throw new TransformerException(this, e);
+        }
+        finally
+        {
+            reader.close();
         }
 
         return maps;
     }
 
-    public String getLineDelimiter()
+    public Delimiter getLineDelimiter()
     {
         return lineDelimiter;
     }
 
-    public void setLineDelimiter(String lineDelimiter)
+    public void setLineDelimiter(Delimiter lineDelimiter)
     {
         this.lineDelimiter = lineDelimiter;
     }
 
-    public int getReadFromLine()
+    public boolean isSkipEmptyRows()
     {
-        return readFromLine;
+        return skipEmptyRows;
     }
 
-    public void setReadFromLine(int readFromLine)
+    public void setSkipEmptyRows(boolean skipEmptyRows)
     {
-        this.readFromLine = readFromLine;
+        this.skipEmptyRows = skipEmptyRows;
+    }
+
+    public boolean isTrimWhitespace()
+    {
+        return trimWhitespace;
+    }
+
+    public void setTrimWhitespace(boolean trimWhitespace)
+    {
+        this.trimWhitespace = trimWhitespace;
+    }
+
+    public Delimiter getDelimiter()
+    {
+        return delimiter;
+    }
+
+    public void setDelimiter(Delimiter delimiter)
+    {
+        this.delimiter = delimiter;
     }
 }

@@ -14,6 +14,8 @@ import org.mule.module.client.MuleClient;
 import org.mule.tck.FunctionalTestCase;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataPackDelimitedToMapTestCase extends FunctionalTestCase
 {
@@ -26,10 +28,12 @@ public class DataPackDelimitedToMapTestCase extends FunctionalTestCase
     public void testDelimitedToMap() throws Exception
     {
         MuleClient client = new MuleClient(muleContext);
-        MuleMessage request = client.send("vm://delimitedToMap.in", "data\tdata", null);
+        MuleMessage request = client.send("vm://delimitedToMap.in", "foo\tbar\rdata\tdata", null);
 
         assertNotNull(request);
         assertNotNull(request.getPayload());
-        assertEquals(((HashMap) request.getPayload()).keySet().size(), 2);
+        assertEquals(1, ((List) request.getPayload()).size());
+        Map row = (HashMap)((List) request.getPayload()).get(0);
+        assertEquals(2, row.keySet().size());
     }
 }

@@ -7,12 +7,16 @@
  */
 package org.mule.module.datapack.config;
 
+import org.mule.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.config.spring.parsers.specific.MessageProcessorDefinitionParser;
-import org.mule.module.datapack.DelimitedToMapTransformer;
 import org.mule.module.datapack.DelimitedToMapsTransformer;
+import org.mule.module.datapack.MappingTransformer;
 import org.mule.module.datapack.columns.Column;
 import org.mule.module.datapack.columns.DateTimeColumn;
 import org.mule.module.datapack.columns.TransformColumn;
+import org.mule.module.datapack.mapper.DateMapping;
+import org.mule.module.datapack.mapper.Mapping;
+
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 
@@ -22,10 +26,12 @@ public class DataPackNamespaceHandler extends NamespaceHandlerSupport
     {
         registerBeanDefinitionParser("fixed-width-output-transformer", new FixedWidthOutputDefinitionParser());
         registerBeanDefinitionParser("delimited-output-transformer", new DelimitedOutputDefinitionParser());
-        registerBeanDefinitionParser("column", new ColumnDefinitionParser("column", Column.class));
-        registerBeanDefinitionParser("date-time-column", new DateTimeColumnDefinitionParser(DateTimeColumn.class));
-        registerBeanDefinitionParser("transform-column", new TransformColumnDefinitionParser("column", TransformColumn.class));
-        registerBeanDefinitionParser("delimited-to-map-transformer", new MessageProcessorDefinitionParser(DelimitedToMapTransformer.class));
+        registerBeanDefinitionParser("column", new ChildDefinitionParser("column", Column.class));
+        registerBeanDefinitionParser("date-time-column", new ChildDefinitionParser("column",DateTimeColumn.class));
+        registerBeanDefinitionParser("transform-column", new ChildDefinitionParser("column", TransformColumn.class));
         registerBeanDefinitionParser("delimited-to-maps-transformer", new MessageProcessorDefinitionParser(DelimitedToMapsTransformer.class));
+        registerBeanDefinitionParser("mapping-transformer", new MessageProcessorDefinitionParser(MappingTransformer.class));
+        registerBeanDefinitionParser("mapping", new ChildDefinitionParser("mapping", Mapping.class));
+        registerBeanDefinitionParser("date-mapping", new ChildDefinitionParser("mapping", DateMapping.class));
     }
 }

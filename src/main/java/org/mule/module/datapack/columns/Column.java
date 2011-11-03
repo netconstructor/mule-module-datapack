@@ -24,7 +24,6 @@ public class Column
 {
     public static final String CURRENT_VALUE_PATTERN = "#[map-payload:%s]";
     private String columnName = null;
-    private String mappedColumnName = null;
     private String length;
     private String value;
     private String columnIndex;
@@ -32,7 +31,6 @@ public class Column
     private String padChar = null;
     private String lineBreak;
     private String encloseChar;
-    private boolean skipColumn = false;
 
     protected final TemplateParser.PatternInfo patternInfo = TemplateParser.createMuleStyleParser().getStyle();
 
@@ -179,25 +177,5 @@ public class Column
     public void setEncloseChar(String encloseChar)
     {
         this.encloseChar = encloseChar;
-    }
-
-    public String getMappedColumnName()
-    {
-        return (mappedColumnName ==null ? getColumnName() : mappedColumnName);
-    }
-
-    public void setMappedColumnName(String mappedColumnName)
-    {
-        this.mappedColumnName = mappedColumnName;
-    }
-
-    public boolean isSkipColumn()
-    {
-        return skipColumn;
-    }
-
-    public void setSkipColumn(boolean skipColumn)
-    {
-        this.skipColumn = skipColumn;
     }
 }

@@ -33,13 +33,33 @@ public class DataPackDelimitedToMapWithMappingTestCase extends FunctionalTestCas
 
         assertNotNull(request);
         assertNotNull(request.getPayload());
-        assertEquals(((List)request.getPayload()).size(), 21);
+        assertEquals(21, ((List)request.getPayload()).size());
 
         Map row = (Map)((List)request.getPayload()).get(0);
         assertEquals(2, row.size());
 
         assertEquals("Jack-Rogers", row.get("Name"));
         assertEquals("001E000000BZaaLIAT", row.get("Id"));
+
+    }
+
+    public void testDelimitedToMapWithMappingDates() throws Exception
+    {
+        String data = loadResourceAsString("test-data/test2.csv");
+        MuleClient client = new MuleClient(muleContext);
+        MuleMessage request = client.send("vm://delimitedToMap2.in", data, null);
+
+        assertNotNull(request);
+        assertNotNull(request.getPayload());
+        assertEquals(21, ((List)request.getPayload()).size());
+
+        Map row = (Map)((List)request.getPayload()).get(0);
+        assertEquals(3, row.size());
+
+        assertEquals("08.31.1933", row.get("DoB"));
+        assertEquals("Jack-Rogers", row.get("Name"));
+        assertEquals("001E000000BZaaLIAT", row.get("Id"));
+
 
     }
 }

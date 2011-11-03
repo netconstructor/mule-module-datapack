@@ -12,11 +12,27 @@
     <flow name="delimitedToMap" processingStrategy="synchronous">
         <vm:inbound-endpoint path="delimitedToMap.in" exchange-pattern="request-response"/>
 
-        <datapack:delimited-to-maps-transformer delimiter="," lineDelimiter="\r" readFromLine="2">
-            <datapack:column columnName="AccountId" mappedColumnName="Id"/>
-            <datapack:column columnName="LastName" skipColumn="true"/>
-            <datapack:column columnName="FirstName" mappedColumnName="Name" value="#[groovy:payload.get('FirstName') + '-' + payload.get('LastName')]"/>
-        </datapack:delimited-to-maps-transformer>
+        <datapack:delimited-to-maps-transformer delimiter="COMMA" lineDelimiter="CR"/>
+
+        <datapack:mapping-transformer >
+            <datapack:mapping destinationColumn="Id" sourceColumn="AccountId"/>
+            <datapack:mapping destinationColumn="Name" value="#[groovy:payload.FirstName + '-' + payload.LastName]"/>
+        </datapack:mapping-transformer>
+
+    </flow>
+
+    <flow name="delimitedToMap2" processingStrategy="synchronous">
+        <vm:inbound-endpoint path="delimitedToMap2.in" exchange-pattern="request-response"/>
+
+        <datapack:delimited-to-maps-transformer delimiter="COMMA"/>
+
+
+        <datapack:mapping-transformer >
+            <datapack:date-mapping destinationColumn="DoB" sourceColumn="Birthdate" dateFormatIn="yyyy-MM-dd" dateFormatOut="MM.dd.yyyy"/>
+            <datapack:mapping destinationColumn="Id" sourceColumn="AccountId"/>
+            <datapack:mapping destinationColumn="Name" value="#[groovy:payload.FirstName + '-' + payload.LastName]"/>
+        </datapack:mapping-transformer>
+
     </flow>
 
 </mule>

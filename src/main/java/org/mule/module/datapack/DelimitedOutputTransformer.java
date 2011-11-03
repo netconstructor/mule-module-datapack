@@ -10,21 +10,18 @@
 package org.mule.module.datapack;
 
 import org.mule.api.MuleMessage;
-import org.mule.api.expression.ExpressionManager;
-import org.mule.api.lifecycle.InitialisationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.module.datapack.columns.Column;
 import org.mule.module.datapack.i18n.DataPackMessages;
 import org.mule.transformer.AbstractMessageTransformer;
-import org.mule.util.TemplateParser;
 
 import java.util.List;
 
 public class DelimitedOutputTransformer extends AbstractMessageTransformer
 {
     private List<Column> columns;
-    private String newlineChar = "\n";
-    private String delimiterChar = "\t";
+    private Delimiter lineDelimiter = Delimiter.LF;
+    private Delimiter delimiter = Delimiter.TAB;
     private Boolean trimToLength = false;
     private Boolean addSpace = false;
 
@@ -79,16 +76,16 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
             // column marked as a linebreak
             if (column.getLineBreak() != null && Boolean.parseBoolean(column.getLineBreak()))
             {
-            	output.append(newlineChar);
+            	output.append(getLineDelimiterChar());
             }
             // Only put the delimiter on everything except for the last column or column marked as line break
             else if (i < columns.size() - 1)
             {
-                output.append(delimiterChar);
+                output.append(getDelimiterChar());
             }
         }
 
-        output.append(newlineChar);
+        output.append(getLineDelimiterChar());
 
         return output.toString();
     }
@@ -104,28 +101,34 @@ public class DelimitedOutputTransformer extends AbstractMessageTransformer
         this.columns = columns;
     }
 
-    public String getNewlineChar()
+    public Delimiter getLineDelimiter()
     {
-        return newlineChar;
+        return lineDelimiter;
     }
 
-    public void setNewlineChar(String newlineChar)
+    public char getLineDelimiterChar()
     {
-        this.newlineChar = newlineChar;
+        return Delimiter.getChar(lineDelimiter);
     }
 
-    public String getDelimiterChar()
+    public void setLineDelimiter(Delimiter lineDelimiter)
     {
-        return delimiterChar;
+        this.lineDelimiter = lineDelimiter;
     }
 
-    public void setDelimiterChar(String delimiterChar)
+    public Delimiter getDelimiter()
     {
-		if(delimiterChar.equals("\\t"))
-		{
-			this.delimiterChar = "\t";
-		}
-        this.delimiterChar = delimiterChar;
+        return delimiter;
+    }
+
+    public char getDelimiterChar()
+    {
+        return Delimiter.getChar(delimiter);
+    }
+
+    public void setDelimiter(Delimiter delimiter)
+    {
+        this.delimiter = delimiter;
     }
 
     public Boolean getTrimToLength()

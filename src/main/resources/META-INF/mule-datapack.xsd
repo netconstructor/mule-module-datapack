@@ -22,8 +22,10 @@
     </xsd:annotation>
 
 
+    <!-- ======= Transformer definitions ========-->
+
     <xsd:element name="fixed-width-output-transformer" type="FixedWidthOutputType"
-                 substitutionGroup="mule:abstract-transformer">
+                 substitutionGroup="mule:abstract-message-processor">
         <xsd:annotation>
             <xsd:documentation>
                 Based upon the configuration generate a fixed width output.
@@ -56,10 +58,28 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="newlineChar" type="xsd:string" use="optional">
+                <xsd:attribute name="newlineChar" type="delimiter" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
-                            This is the newline character to used for the row once written out.
+                            This is the newline character to used for the row once written out. The following delimiters are supported:
+                            <table>
+                                <tr><th>Name</th><th>Char</th></tr>
+                                <tr><td>LF</td><td>'\n'</td></tr>
+                                <tr><td>CR</td><td>'\r'</td></tr>
+                                <tr><td>QUOTE</td><td>'"'</td></tr>
+                                <tr><td>COMMA</td><td>','</td></tr>
+                                <tr><td>SPACE</td><td>' '</td></tr>
+                                <tr><td>TAB</td><td>'\t'</td></tr>
+                                <tr><td>POUND</td><td>'#'</td></tr>
+                                <tr><td>BACKSLASH</td><td>'\\'</td></tr>
+                                <tr><td>PIPE</td><td>'|'</td></tr>
+                                <tr><td>NULL</td><td>'\0'</td></tr>
+                                <tr><td>BACKSPACE</td><td>'\b'</td></tr>
+                                <tr><td>FORMFEED</td><td>'\f'</td></tr>
+                                <tr><td>ESCAPE</td><td>'\u001B'</td></tr>
+                                <tr><td>VERTICAL_TAB</td><td>'\u000B'</td></tr>
+                                <tr><td>ALERT</td><td>'\u0007'</td></tr>
+                            </table>
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -68,7 +88,7 @@
     </xsd:complexType>
 
     <xsd:element name="delimited-output-transformer" type="DelimitedOutputType"
-                 substitutionGroup="mule:abstract-transformer">
+                 substitutionGroup="mule:abstract-message-processor">
         <xsd:annotation>
             <xsd:documentation>
                 Based upon the configuration generate a fixed width output.
@@ -87,10 +107,28 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsd:sequence>
-                <xsd:attribute name="delimiterChar" type="xsd:string" use="optional">
+                <xsd:attribute name="delimiter" type="delimiter" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The delimiter to be used, by default a comma is used.
+                            The delimiter to be used, by default a comma is used. The following delimiters are supported:
+                            <table>
+                                <tr><th>Name</th><th>Char</th></tr>
+                                <tr><td>LF</td><td>'\n'</td></tr>
+                                <tr><td>CR</td><td>'\r'</td></tr>
+                                <tr><td>QUOTE</td><td>'"'</td></tr>
+                                <tr><td>COMMA</td><td>','</td></tr>
+                                <tr><td>SPACE</td><td>' '</td></tr>
+                                <tr><td>TAB</td><td>'\t'</td></tr>
+                                <tr><td>POUND</td><td>'#'</td></tr>
+                                <tr><td>BACKSLASH</td><td>'\\'</td></tr>
+                                <tr><td>PIPE</td><td>'|'</td></tr>
+                                <tr><td>NULL</td><td>'\0'</td></tr>
+                                <tr><td>BACKSPACE</td><td>'\b'</td></tr>
+                                <tr><td>FORMFEED</td><td>'\f'</td></tr>
+                                <tr><td>ESCAPE</td><td>'\u001B'</td></tr>
+                                <tr><td>VERTICAL_TAB</td><td>'\u000B'</td></tr>
+                                <tr><td>ALERT</td><td>'\u0007'</td></tr>
+                            </table>
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -102,11 +140,29 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="newlineChar" type="xsd:string" use="optional">
+                <xsd:attribute name="lineDelimiter" type="delimiter" use="optional" default="LF">
                     <xsd:annotation>
                         <xsd:documentation>
                             This is the newline character to used for the row once written out, by default this is a
-                            "\n".
+                            "\n". The following delimiters are supported:
+                            <table>
+                                <tr><th>Name</th><th>Char</th></tr>
+                                <tr><td>LF</td><td>'\n'</td></tr>
+                                <tr><td>CR</td><td>'\r'</td></tr>
+                                <tr><td>QUOTE</td><td>'"'</td></tr>
+                                <tr><td>COMMA</td><td>','</td></tr>
+                                <tr><td>SPACE</td><td>' '</td></tr>
+                                <tr><td>TAB</td><td>'\t'</td></tr>
+                                <tr><td>POUND</td><td>'#'</td></tr>
+                                <tr><td>BACKSLASH</td><td>'\\'</td></tr>
+                                <tr><td>PIPE</td><td>'|'</td></tr>
+                                <tr><td>NULL</td><td>'\0'</td></tr>
+                                <tr><td>BACKSPACE</td><td>'\b'</td></tr>
+                                <tr><td>FORMFEED</td><td>'\f'</td></tr>
+                                <tr><td>ESCAPE</td><td>'\u001B'</td></tr>
+                                <tr><td>VERTICAL_TAB</td><td>'\u000B'</td></tr>
+                                <tr><td>ALERT</td><td>'\u0007'</td></tr>
+                            </table>
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -129,37 +185,31 @@
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:element name="delimited-to-map-transformer" type="DelimitedToMapType"
-                 substitutionGroup="mule:abstract-transformer">
-        <xsd:annotation>
-            <xsd:documentation>
-
-            </xsd:documentation>
-        </xsd:annotation>
-    </xsd:element>
     <xsd:complexType name="DelimitedToMapType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractTransformerType">
-                <xsd:sequence>
-                    <xsd:element ref="abstract-column" minOccurs="1" maxOccurs="unbounded">
-                        <xsd:annotation>
-                            <xsd:documentation>
-
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                </xsd:sequence>
-                <xsd:attribute name="delimiter" type="xsd:string" use="optional">
+                <xsd:attribute name="delimiter" type="delimiter" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
-                            This is the delimiter used when breaking up the row of data into individual columns.
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:attribute>
-                <xsd:attribute name="ignoreExtraColumns" type="xsd:boolean" use="optional">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            If additional columns are added to the file (which commonly happens when new data is added) this flag will allow Mule to process the new file without throwing an error.
+                            This is the delimiter used when breaking up the row of data into individual columns. The following delimiters are supported
+                            <table>
+                                <tr><th>Name</th><th>Char</th></tr>
+                                <tr><td>LF</td><td>'\n'</td></tr>
+                                <tr><td>CR</td><td>'\r'</td></tr>
+                                <tr><td>QUOTE</td><td>'"'</td></tr>
+                                <tr><td>COMMA</td><td>','</td></tr>
+                                <tr><td>SPACE</td><td>' '</td></tr>
+                                <tr><td>TAB</td><td>'\t'</td></tr>
+                                <tr><td>POUND</td><td>'#'</td></tr>
+                                <tr><td>BACKSLASH</td><td>'\\'</td></tr>
+                                <tr><td>PIPE</td><td>'|'</td></tr>
+                                <tr><td>NULL</td><td>'\0'</td></tr>
+                                <tr><td>BACKSPACE</td><td>'\b'</td></tr>
+                                <tr><td>FORMFEED</td><td>'\f'</td></tr>
+                                <tr><td>ESCAPE</td><td>'\u001B'</td></tr>
+                                <tr><td>VERTICAL_TAB</td><td>'\u000B'</td></tr>
+                                <tr><td>ALERT</td><td>'\u0007'</td></tr>
+                            </table>
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -169,37 +219,86 @@
     </xsd:complexType>
 
     <xsd:element name="delimited-to-maps-transformer" type="DelimitedToMapsType"
-                     substitutionGroup="mule:abstract-transformer">
-            <xsd:annotation>
-                <xsd:documentation>
+                 substitutionGroup="mule:abstract-message-processor">
+        <xsd:annotation>
+            <xsd:documentation>
 
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:element>
-        <xsd:complexType name="DelimitedToMapsType">
-            <xsd:complexContent>
-                <xsd:extension base="DelimitedToMapType">
-                    <xsd:attribute name="lineDelimiter" type="xsd:string" use="optional">
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="DelimitedToMapsType">
+        <xsd:complexContent>
+            <xsd:extension base="DelimitedToMapType">
+                <xsd:attribute name="lineDelimiter" type="delimiter" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            This is the delimiter used when breaking up the file of data into each row. The following delimiters are supported:
+                            <table>
+                                <tr><th>Name</th><th>Char</th></tr>
+                                <tr><td>LF</td><td>'\n'</td></tr>
+                                <tr><td>CR</td><td>'\r'</td></tr>
+                                <tr><td>QUOTE</td><td>'"'</td></tr>
+                                <tr><td>COMMA</td><td>','</td></tr>
+                                <tr><td>SPACE</td><td>' '</td></tr>
+                                <tr><td>TAB</td><td>'\t'</td></tr>
+                                <tr><td>POUND</td><td>'#'</td></tr>
+                                <tr><td>BACKSLASH</td><td>'\\'</td></tr>
+                                <tr><td>PIPE</td><td>'|'</td></tr>
+                                <tr><td>NULL</td><td>'\0'</td></tr>
+                                <tr><td>BACKSPACE</td><td>'\b'</td></tr>
+                                <tr><td>FORMFEED</td><td>'\f'</td></tr>
+                                <tr><td>ESCAPE</td><td>'\u001B'</td></tr>
+                                <tr><td>VERTICAL_TAB</td><td>'\u000B'</td></tr>
+                                <tr><td>ALERT</td><td>'\u0007'</td></tr>
+                            </table>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="trimWhitespace" type="xsd:boolean" use="optional" default="true">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            If set to true this flag will cause any whitespace around the values in the file to be trimmed.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="skipEmptyRows" type="xsd:boolean" use="optional" default="true">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            If set to true, any empty rows in the csv file will be skipped
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="mapping-transformer" type="MappingTransformerType"
+                 substitutionGroup="mule:abstract-message-processor">
+        <xsd:annotation>
+            <xsd:documentation>
+                TODO
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="MappingTransformerType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:sequence>
+                    <xsd:element ref="abstract-mapping" minOccurs="1" maxOccurs="unbounded">
                         <xsd:annotation>
                             <xsd:documentation>
-                                This is the delimiter used when breaking up the file of data into each row.
+
                             </xsd:documentation>
                         </xsd:annotation>
-                    </xsd:attribute>
-                    <xsd:attribute name="readFromLine" type="xsd:int" use="optional">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                Determines which line to start reading data from in the delimited file
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:attribute>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
 
-                </xsd:extension>
-            </xsd:complexContent>
-        </xsd:complexType>
+    <!-- ======= Column definitions ========-->
 
-
-    <xsd:element name="abstract-column" type="abstractColumnType">
+    <xsd:element name="abstract-column" type="abstractColumnType" abstract="true">
     </xsd:element>
     <xsd:complexType name="abstractColumnType">
     </xsd:complexType>
@@ -217,13 +316,6 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="skipColumn" type="xsd:boolean" use="optional">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            When parsing the file this flag will control whether the column data is included in the resulting dataset.
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:attribute>
                 <xsd:attribute name="length" type="xsd:string" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
@@ -238,7 +330,6 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
-                <xsd:attribute name="mappedColumnName" type="xsd:string" use="optional"/>
                 <xsd:attribute name="defaultValue" type="xsd:string" use="optional"/>
                 <xsd:attribute name="padChar" type="xsd:string" use="optional"/>
                 <xsd:attribute name="lineBreak" type="xsd:string" use="optional"/>
@@ -254,10 +345,10 @@
     <xsd:complexType name="dateTimeColumnType">
         <xsd:complexContent>
             <xsd:extension base="columnType">
-                <xsd:attribute name="date-format-in" type="xsd:string" use="required">
+                <xsd:attribute name="dateFormatIn" type="xsd:string" use="required">
 
                 </xsd:attribute>
-                <xsd:attribute name="date-format-out" type="xsd:string" use="required">
+                <xsd:attribute name="dateFormatOut" type="xsd:string" use="required">
 
                 </xsd:attribute>
             </xsd:extension>
@@ -270,10 +361,303 @@
     <xsd:complexType name="transformColumnType">
         <xsd:complexContent>
             <xsd:extension base="columnType">
-                <xsd:attribute name="transformer-name" type="xsd:string" use="required">
+                <xsd:attribute name="transformerName" type="xsd:string" use="required">
 
                 </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
+
+    <!-- ======= Mapping definitions ========-->
+
+    <xsd:element name="abstract-mapping" type="abstractMappingType" abstract="true">
+    </xsd:element>
+    <xsd:complexType name="abstractMappingType">
+    </xsd:complexType>
+
+    <xsd:element name="mapping" type="mappingType" substitutionGroup="abstract-mapping"/>
+
+    <xsd:complexType name="mappingType">
+        <xsd:complexContent>
+            <xsd:extension base="abstractMappingType">
+                <xsd:attribute name="sourceColumn" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The name of the source column to map value to a destination column. If you want to perform
+                            some
+                            processing on the data before it gets mapped, use the 'value' attribute to define the
+                            expression
+                            used to populate the destination column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="destinationColumn" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Name of the destination column to map to map data to. This is required since this element
+                            represents
+                            the mapping rule for the this destination column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="value" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The value that will be used to set the data for the destination column. This can be a fixed
+                            value or
+                            a Mule expression can be used. The Groovy expression evaluator is most commonly used since
+                            it allows
+                            code to be embedded. Source fields are available directly in the payload so you can
+                            manipulate one
+                            or more source column fields to create the destination column value. For example, to
+                            concatenate
+                            'FirstName' and 'LastName' column fields you would use the following in the value field:
+                            #[groovy:payload.FirstName + ' ' + payload.LastName]
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="defaultValue" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Defines a fixed default value if the source column value is null.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="date-mapping" type="dateMappingType" substitutionGroup="abstract-mapping"/>
+
+    <xsd:complexType name="dateMappingType">
+        <xsd:complexContent>
+            <xsd:extension base="abstractMappingType">
+                <xsd:attribute name="sourceColumn" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The name of the source column to map value to a destination column. If you want to perform
+                            some processing on the data before it gets mapped, use the 'value' attribute to define the
+                            expression used to populate the destination column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="destinationColumn" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Name of the destination column to map to map data to. This is required since this element
+                            represents the mapping rule for the this destination column.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="defaultValue" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Defines a fixed default value if the source column value is null.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="dateFormatIn" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Defines the format of the date being read from the source column. The following list some
+                            examples, full documentation about the data format syntax can be found<a
+                                href="http://download.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html">
+                            here</a>.
+
+
+                            <table border="0" cellspacing="3" cellpadding="0"
+                                   summary="Examples of date and time patterns interpreted in the U.S. locale">
+                                <tbody>
+                                    <tr bgcolor="#ccccff">
+                                        <th align="left">Date and Time Pattern
+                                        </th>
+                                        <th align="left">Result
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"yyyy.MM.dd G 'at' HH:mm:ss z"</code>
+                                        </td>
+                                        <td>
+                                            <code>2001.07.04 AD at 12:08:56 PDT</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"EEE, MMM d, ''yy"</code>
+                                        </td>
+                                        <td>
+                                            <code>Wed, Jul 4, '01</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"h:mm a"</code>
+                                        </td>
+                                        <td>
+                                            <code>12:08 PM</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"hh 'o''clock' a, zzzz"</code>
+                                        </td>
+                                        <td>
+                                            <code>12 o'clock PM, Pacific Daylight Time</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"K:mm a, z"</code>
+                                        </td>
+                                        <td>
+                                            <code>0:08 PM, PDT</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"yyyyy.MMMMM.dd GGG hh:mm aaa"</code>
+                                        </td>
+                                        <td>
+                                            <code>02001.July.04 AD 12:08 PM</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"EEE, d MMM yyyy HH:mm:ss Z"</code>
+                                        </td>
+                                        <td>
+                                            <code>Wed, 4 Jul 2001 12:08:56 -0700</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"yyMMddHHmmssZ"</code>
+                                        </td>
+                                        <td>
+                                            <code>010704120856-0700</code>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+
+                <xsd:attribute name="dateFormatOut" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Defines the format of the date that will be written to the destination value. The following list some
+                            examples, full documentation about the data format syntax can be found<a
+                                href="http://download.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html">
+                            here</a>.
+
+
+                            <table border="0" cellspacing="3" cellpadding="0"
+                                   summary="Examples of date and time patterns interpreted in the U.S. locale">
+                                <tbody>
+                                    <tr bgcolor="#ccccff">
+                                        <th align="left">Date and Time Pattern
+                                        </th>
+                                        <th align="left">Result
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"yyyy.MM.dd G 'at' HH:mm:ss z"</code>
+                                        </td>
+                                        <td>
+                                            <code>2001.07.04 AD at 12:08:56 PDT</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"EEE, MMM d, ''yy"</code>
+                                        </td>
+                                        <td>
+                                            <code>Wed, Jul 4, '01</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"h:mm a"</code>
+                                        </td>
+                                        <td>
+                                            <code>12:08 PM</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"hh 'o''clock' a, zzzz"</code>
+                                        </td>
+                                        <td>
+                                            <code>12 o'clock PM, Pacific Daylight Time</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"K:mm a, z"</code>
+                                        </td>
+                                        <td>
+                                            <code>0:08 PM, PDT</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"yyyyy.MMMMM.dd GGG hh:mm aaa"</code>
+                                        </td>
+                                        <td>
+                                            <code>02001.July.04 AD 12:08 PM</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>"EEE, d MMM yyyy HH:mm:ss Z"</code>
+                                        </td>
+                                        <td>
+                                            <code>Wed, 4 Jul 2001 12:08:56 -0700</code>
+                                        </td>
+                                    </tr>
+                                    <tr bgcolor="#eeeeff">
+                                        <td>
+                                            <code>"yyMMddHHmmssZ"</code>
+                                        </td>
+                                        <td>
+                                            <code>010704120856-0700</code>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="delimiter">
+        <xsd:annotation>
+            <xsd:documentation>
+                 foo
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="mule:substitutableName">
+            <xsd:enumeration value="LF"/>
+            <xsd:enumeration value="CR"/>
+            <xsd:enumeration value="QUOTE"/>
+            <xsd:enumeration value="COMMA"/>
+            <xsd:enumeration value="SPACE"/>
+            <xsd:enumeration value="TAB"/>
+            <xsd:enumeration value="POUND"/>
+            <xsd:enumeration value="BACKSLASH"/>
+            <xsd:enumeration value="PIPE"/>
+            <xsd:enumeration value="NULL"/>
+            <xsd:enumeration value="BACKSPACE"/>
+            <xsd:enumeration value="FORMFEED"/>
+            <xsd:enumeration value="ESCAPE"/>
+            <xsd:enumeration value="VERTICAL_TAB"/>
+            <xsd:enumeration value="ALERT"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
 </xsd:schema>

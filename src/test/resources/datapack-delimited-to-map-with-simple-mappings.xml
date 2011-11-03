@@ -12,11 +12,13 @@
     <flow name="delimitedToMap" processingStrategy="synchronous">
         <vm:inbound-endpoint path="delimitedToMap.in" exchange-pattern="request-response"/>
 
-        <datapack:delimited-to-maps-transformer delimiter="," lineDelimiter="\r" readFromLine="2">
-            <datapack:column columnName="AccountId" mappedColumnName="Id"/>
-            <datapack:column columnName="LastName" />
-            <datapack:column columnName="FirstName"/>
-        </datapack:delimited-to-maps-transformer>
+        <datapack:delimited-to-maps-transformer delimiter="COMMA" lineDelimiter="CR"/>
+
+        <datapack:mapping-transformer >
+            <datapack:mapping destinationColumn="Id" sourceColumn="AccountId"/>
+            <datapack:mapping destinationColumn="LastName" sourceColumn="LastName"/>
+            <datapack:mapping destinationColumn="FirstName" sourceColumn="FirstName"/>
+        </datapack:mapping-transformer>
     </flow>
 
 </mule>
